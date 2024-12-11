@@ -1,0 +1,32 @@
+package fr.utbm.info.da53.lw2.syntaxtree.statements;
+
+import fr.utbm.info.da53.lw2.context.ExecutionContext;
+import fr.utbm.info.da53.lw2.error.InterpreterException;
+import fr.utbm.info.da53.lw2.syntaxtree.AbstractStatementTreeNode;
+import fr.utbm.info.da53.lw2.syntaxtree.AbstractValueTreeNode;
+
+/**
+ * This class represents the GOTO statement in Tiny Basic.
+ * It causes the program to jump to a specific line.
+ */
+public class GotoStatementNode extends AbstractStatementTreeNode {
+    private final AbstractValueTreeNode lineNumberExpression;
+
+    public GotoStatementNode(AbstractValueTreeNode lineNumberExpression) {
+        this.lineNumberExpression = lineNumberExpression;
+    }
+
+    @Override
+    public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
+        // Evaluate the line number expression
+        int lineNumber = lineNumberExpression.evaluate(executionContext).getValue(Integer.class);
+        // Jump to the specified line
+        executionContext.setNextLine(lineNumber);
+        return executionContext;
+    }
+
+    @Override
+    public String toString() {
+        return "GOTO " + lineNumberExpression.toString();
+    }
+}

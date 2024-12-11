@@ -1,0 +1,186 @@
+/* 
+ * $Id$
+ * 
+ * Copyright (c) 2012-2021 Stephane GALLAND.
+ * 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+options {
+  IGNORE_CASE = true;
+  STATIC = false;
+}
+
+PARSER_BEGIN(BasicParser)
+
+package fr.utbm.info.da53.lw2.parser;
+
+import fr.utbm.info.da53.lw2.error.BasicParserError;
+import fr.utbm.info.da53.lw2.error.BasicParserWarning;
+import fr.utbm.info.da53.lw2.symbol.SymbolTable;import fr.utbm.info.da53.lw2.type.NumberUtil;
+
+public class BasicParser{
+    private int basicLineNumber = 1;
+    private final SymbolTable symbolTable = new SymbolTable();
+
+    /** Replies the symbol table used by the parser.
+    * @return the symbol table.
+    */
+    public SymbolTable getSymbolTable() {
+        return this.symbolTable;
+    }
+}}
+}
+
+PARSER_END(BasicParser)
+
+SKIP :
+{
+" "
+| "\t"
+| "\r"
+| "REM (~[\n])*"
+}
+
+TOKEN : {
+        < CR: "\n" >
+    |   < NUMBER: (["0"-"9"])+ >
+    |   < STRING: ("\"" (~["\""])* "\"") >
+    |   < PRINT: "PRINT" >
+    |   < GOTO: "GOTO" >
+    |   < GOSUB: "GOSUB" >
+    |   < RETURN: "RETURN" >
+    |   < INPUT: "INPUT" >
+    |   < LET: "LET" >
+    |   < END: "END" >
+    |   < ELSE: "ELSE" >
+    |   < IF: "IF" >
+    |   < THEN: "THEN" >
+    |   < EQ: "=" >
+    |   < DIFF: "<>" >
+    |   < LT: "<" >
+    |   < GT: ">" >
+    |   < LE: "<=" >
+    |   < GE: ">=" >
+    |   < OPEN_PARENT: "(" >
+    |   < CLOSE_PARENT: ")" >
+    |   < COMA: "," >
+    |   < PLUS: "+" >
+    |   < MINUS: "-" >
+    |   < MULTIPLY: "*" >
+    |   < DIVIDE: "/" >
+    |   < IDENTIFIER: (["a"-"z", "A"-"Z"] (["a"-"z", "A"-"Z", "0"-"9"])* ) >
+ }
+
+void code() throws CompilerException:
+{}
+{
+    lineOfCode() restOfCode()
+}
+
+void restOfCode() :
+{}
+{
+  <CR> lineOfCode() restOfCode()
+  | {}
+}
+
+
+void lineOfCode() :
+{}
+{
+  <NUMBER> statement()
+  | statement()
+}
+
+
+void statement() :
+{}
+{
+    <PRINT> expression()
+    |<IF> expression() relop() expression() <THEN> statement() elseStatement()
+    |<GOTO> expression()
+    |<INPUT> variable()
+    |<LET> variable() <EQ> expression()
+    |<GOSUB> expression()
+    |<RETURN>
+    |<END>
+}
+
+void elseStatement() :
+{}
+{
+    <ELSE> statement()
+    |{}
+}
+
+void relop():
+{}
+{
+   <EQ>
+   |<DIFF>
+   |<LT>
+   |<LE>
+   |<GT>
+   |<GE>
+}
+
+void expression():
+{}
+{
+    term() expressionp()
+}
+
+
+void expressionp():
+{}
+{
+    <PLUS> term() expressionp()
+    |<MINUS> term() expressionp()
+    | {}
+}
+
+void term():
+{}
+{
+    factor() termp()
+}
+
+void termp(float t):
+{float e, r;}
+{
+    <MULTIPLY> e = factor() r = termp(e+t) {return e;}
+    |<DIVIDE> factor() termp()
+    | {}
+}
+
+void factor():
+{Number e;}
+{
+    <OPEN_PARENT> e = expression() <CLOSE_PARENT> {return e;}
+    | e = variable() {return e;}
+}
+
+void variable():
+{
+        Token t;
+}
+{
+    t = <NUMBER> {return NumberUtil.parse(e.image);}
+    | t = <IDENTIFIER> {this.symbolTable.add(t.image,t.beginLine);
+                        return this.symbolTable.get(t.image);}
+}
+
+

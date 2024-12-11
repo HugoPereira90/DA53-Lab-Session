@@ -1,0 +1,35 @@
+package fr.utbm.info.da53.lw2.syntaxtree.operator;
+
+import fr.utbm.info.da53.lw2.context.ExecutionContext;
+import fr.utbm.info.da53.lw2.error.InterpreterErrorType;
+import fr.utbm.info.da53.lw2.error.InterpreterException;
+import fr.utbm.info.da53.lw2.syntaxtree.AbstractBinaryOperatorTreeNode;
+import fr.utbm.info.da53.lw2.type.Value;
+import fr.utbm.info.da53.lw2.syntaxtree.AbstractValueTreeNode;
+import fr.utbm.info.da53.lw2.type.VariableType;
+
+public class MultNode extends AbstractBinaryOperatorTreeNode {
+
+    /**
+     * @param leftOperand
+     * @param rightOperand
+     */
+    public MultNode(AbstractValueTreeNode leftOperand, AbstractValueTreeNode rightOperand) {
+        super(leftOperand, rightOperand);
+    }
+
+
+    @Override
+    protected Value compute(ExecutionContext executionContext, Value left, Value right) throws InterpreterException {
+        if(left.getType() != VariableType.NUMBER || right.getType() != VariableType.NUMBER) {
+            fail(executionContext, InterpreterErrorType.EXPECTING_NUMBER,"Multiplication is only supported for numbers");
+        }
+
+        return new Value(left.getValue(Number.class).floatValue() * right.getValue(Number.class).floatValue());
+    }
+
+    @Override
+    public String getOperatorString() {
+        return "*";
+    }
+}
