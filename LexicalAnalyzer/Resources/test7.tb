@@ -1,4 +1,0 @@
-LET A = 2
-LET B = A
-IF A = B THEN PRINT 3
-EXIT
