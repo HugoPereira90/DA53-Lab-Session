@@ -30,6 +30,7 @@ package fr.utbm.info.da53.lw2.parser;
 import fr.utbm.info.da53.lw2.error.BasicParserError;
 import fr.utbm.info.da53.lw2.error.BasicParserWarning;
 import fr.utbm.info.da53.lw2.symbol.SymbolTable;import fr.utbm.info.da53.lw2.type.NumberUtil;
+import fr.utbm.info.da53.lw2.syntaxtree.*;
 
 public class BasicParser{
     private int basicLineNumber = 1;
@@ -56,7 +57,7 @@ SKIP :
 
 TOKEN : {
         < CR: "\n" >
-    |   < NUMBER: (["0"-"9"])+ >
+    |   < NUMBER: (["0"-"9"])+ ("."(["0"-"9"])+)?>
     |   < STRING: ("\"" (~["\""])* "\"") >
     |   < PRINT: "PRINT" >
     |   < GOTO: "GOTO" >
@@ -84,67 +85,87 @@ TOKEN : {
     |   < IDENTIFIER: (["a"-"z", "A"-"Z"] (["a"-"z", "A"-"Z", "0"-"9"])* ) >
  }
 
-void code() throws CompilerException:
+private void code() throws CompilerException:
 {}
 {
-    lineOfCode() restOfCode()
+    lineOfCode() restOfCode() {}
 }
 
-void restOfCode() :
+private void restOfCode() throws CompilerException:
 {}
 {
-  <CR> lineOfCode() restOfCode()
+  <CR> lineOfCode() restOfCode()  {}
   | {}
 }
 
 
-void lineOfCode() :
-{}
+private void lineOfCode() throws CompilerException:
 {
-  <NUMBER> statement()
-  | statement()
+    Token t;
+    AbstractStatementTreeNode s;
+}
+{
+  t=<NUMBER> s=statement()
+  | s=statement() {}
 }
 
 
-void statement() :
-{}
+private AbstractStatementTreeNode statement() throws CompilerException:
 {
-    <PRINT> expression()
-    |<IF> expression() relop() expression() <THEN> statement() elseStatement()
-    |<GOTO> expression()
-    |<INPUT> variable()
-    |<LET> variable() <EQ> expression()
-    |<GOSUB> expression()
-    |<RETURN>
-    |<END>
+    Token t1, t2, t3;
+    AbstractStatementTreeNode s1, s2;
+    AbastractComparisonOperatorTreeNode r;
+    AbstractValueTreeNode v1, v2;
+}
+{
+    t1=<PRINT> v1=expression()                          {return new PrintStatementTreeNode(v1);}
+    |t1=<IF> v1=expression() r=relop() v2=expression() t2=<THEN> s1=statement()  s2=elseStatement() {if(v1 == null || r == null || v2 == null || s1 == null) throw new CompilerException(CompilationErrorType.SYNTAX_ERROR,"Syntax error in IF statement");
+                                                                                                        return new IfStatementTreeNode(r, s1, s2);}
+    |t1=<GOTO> v1=expression()                        { if(v1 == null) throw new CompilerException(CompilationErrorType.SYNTAX_ERROR,"Syntax error in GOTO statement");
+                                                        return new GotoStatementTreeNode(v1);}
+    |t1=<INPUT> v1=variable()                          { if(v1 == null) throw new CompilerException(CompilationErrorType.SYNTAX_ERROR,"Syntax error in INPUT statement");
+                                                        return new InputStatementTreeNode(v1);}
+    |t1=<LET> t2=<IDENTIFIER> t3=<EQ> v2=expression() { if(t2 == null || v2 == null) throw new CompilerException(CompilationErrorType.SYNTAX_ERROR,"Syntax error in LET statement");
+                                                        this.symbolTable.declare(t2.image,t2.beginLine);
+                                                        return new LetStatementTreeNode(t2.image, v2);}
+    |t1=<GOSUB> v1=expression()                         {if(v1 == null) throw new CompilerException(CompilationErrorType.SYNTAX_ERROR,"Syntax error in GOSUB statement");
+                                                         return new GosubStatementTreeNode(v1);}
+    |t1=<RETURN>                                {return new ReturnStatementTreeNode();}
+    |t1=<END>                                   {return new EndStatementTreeNode();}
 }
 
-void elseStatement() :
-{}
+private AbstractStatementTreeNode elseStatement() throws CompilerException:
 {
-    <ELSE> statement()
-    |{}
+    Token t;
+    AbstractStatementTreeNode s;
+}
+{
+    t=<ELSE> s=statement() {}
+    |   {}
 }
 
-void relop():
-{}
+private AbastractComparisonOperatorTreeNode relop() throws CompilerException:
 {
-   <EQ>
-   |<DIFF>
-   |<LT>
-   |<LE>
-   |<GT>
-   |<GE>
+ Token t;
+}
+{
+   t=<EQ>
+   |t=<DIFF>
+   |t=<LT>
+   |t=<LE>
+   |t=<GT>
+   |t=<GE>
 }
 
-void expression():
-{}
+private AbstractValueTreeNode expression() throws CompilerException:
+{
+}
 {
     term() expressionp()
 }
 
 
-void expressionp():
+private AbstractValueTreeNode expressionp() throws CompilerException:
 {}
 {
     <PLUS> term() expressionp()
@@ -152,13 +173,13 @@ void expressionp():
     | {}
 }
 
-void term():
+private AbstractValueTreeNode term():
 {}
 {
     factor() termp()
 }
 
-void termp(float t):
+private AbstractValueTreeNode termp(float t) throws CompilerException:
 {float e, r;}
 {
     <MULTIPLY> e = factor() r = termp(e+t) {return e;}
@@ -166,14 +187,14 @@ void termp(float t):
     | {}
 }
 
-void factor():
+private AbstractValueTreeNode factor() throws CompilerException:
 {Number e;}
 {
     <OPEN_PARENT> e = expression() <CLOSE_PARENT> {return e;}
     | e = variable() {return e;}
 }
 
-void variable():
+private AbstractValueTreeNode variable() throws CompilerException:
 {
         Token t;
 }

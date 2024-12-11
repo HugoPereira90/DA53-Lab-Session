@@ -22,7 +22,7 @@ public class MultNode extends AbstractBinaryOperatorTreeNode {
     @Override
     protected Value compute(ExecutionContext executionContext, Value left, Value right) throws InterpreterException {
         if(left.getType() != VariableType.NUMBER || right.getType() != VariableType.NUMBER) {
-            fail(executionContext, InterpreterErrorType.EXPECTING_NUMBER,"Multiplication is only supported for numbers");
+            fail(executionContext, InterpreterErrorType.EXPECTING_NUMBER,getOperatorString() +" is only supported for numbers");
         }
 
         return new Value(left.getValue(Number.class).floatValue() * right.getValue(Number.class).floatValue());
