@@ -11,9 +11,9 @@ import fr.utbm.info.da53.lw2.type.Value;
  * @version 1.0
  */
 public class NumberNode extends AbstractValueTreeNode {
-    private final Number value;
+    private final String value;
 
-    public NumberNode(Number value) {
+    public NumberNode(String value) {
         this.value = value;
     }
 
@@ -30,7 +30,7 @@ public class NumberNode extends AbstractValueTreeNode {
 
     @Override
     public String toString() {
-        return value.toString();
+        return value;
     }
 }
 
