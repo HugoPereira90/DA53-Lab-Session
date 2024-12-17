@@ -25,10 +25,12 @@ import fr.utbm.info.da53.lw2.context.DebugInterpreter;
 import fr.utbm.info.da53.lw2.context.Interpreter;
 import fr.utbm.info.da53.lw2.context.LineBasedInterpreter;
 import fr.utbm.info.da53.lw2.context.Statement;
+import fr.utbm.info.da53.lw2.error.Loggable;
 import fr.utbm.info.da53.lw2.parser.BasicParser;
 import fr.utbm.info.da53.lw2.error.ErrorRepository;
 import fr.utbm.info.da53.lw2.error.InterpreterException;
 import fr.utbm.info.da53.lw2.error.LoggableException;
+import fr.utbm.info.da53.lw2.parser.ParseException;
 import fr.utbm.info.da53.lw2.ui.InterpreterDialog;
 
 /**
@@ -70,8 +72,8 @@ public class BasicInterpreter {
 		try {
 			code = parser.executeCompiler();
 		}
-		catch(LoggableException e) {
-			ErrorRepository.add(e);
+		catch(LoggableException | ParseException e) {
+			ErrorRepository.add((Loggable) e);
 		}
 		
 		System.out.println("Running the code into the interpreter");

@@ -10,6 +10,7 @@ package fr.utbm.info.da53.lw2.parser;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import fr.utbm.info.da53.lw2.context.*;
+import fr.utbm.info.da53.lw2.symbol.*;
 import fr.utbm.info.da53.lw2.error.*;
 import fr.utbm.info.da53.lw2.syntaxtree.*;
 import fr.utbm.info.da53.lw2.syntaxtree.reloop.*;
