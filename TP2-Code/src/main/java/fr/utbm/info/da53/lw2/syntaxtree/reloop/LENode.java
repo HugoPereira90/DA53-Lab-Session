@@ -8,10 +8,18 @@ public class LENode extends AbstractComparisonOperatorTreeNode {
         super();
     }
 
+    /**
+     * Translate the comparison result to a boolean value
+     * @param comparisonResult
+     */
     protected boolean translate(int comparisonResult) {
         return comparisonResult <= 0;
     }
 
+    /**
+     * Get the operator string
+     * @return
+     */
     public String getOperatorString() {
         return "<=";
     }

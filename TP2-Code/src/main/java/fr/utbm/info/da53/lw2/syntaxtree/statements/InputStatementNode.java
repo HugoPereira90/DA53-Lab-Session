@@ -27,6 +27,12 @@ public class InputStatementNode extends AbstractStatementTreeNode {
         this.optionalPrompt = optionalPrompt;
     }
 
+    /**
+     * Run the INPUT statement.
+     *
+     * @param executionContext The execution context.
+     * @throws InterpreterException If an error occurs during the execution.
+     */
     @Override
     public void run(ExecutionContext executionContext) throws InterpreterException {
         Scanner scanner = new Scanner(System.in);
@@ -70,6 +76,11 @@ public class InputStatementNode extends AbstractStatementTreeNode {
         }
     }
 
+    /**
+     * Get the string representation of the INPUT statement.
+     *
+     * @return The string representation of the INPUT statement.
+     */
     @Override
     public String toString() {
         return "INPUT " + (optionalPrompt != null ? "\"" + optionalPrompt + "\" " : "")

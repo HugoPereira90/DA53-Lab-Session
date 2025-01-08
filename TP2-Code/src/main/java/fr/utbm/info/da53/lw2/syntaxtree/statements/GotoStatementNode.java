@@ -16,6 +16,12 @@ public class GotoStatementNode extends AbstractStatementTreeNode {
         this.lineNumberExpression = lineNumberExpression;
     }
 
+    /**
+     * Run the GOTO statement
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the line number expression
@@ -25,6 +31,10 @@ public class GotoStatementNode extends AbstractStatementTreeNode {
         return executionContext;
     }
 
+    /**
+     * Get the string representation of the GOTO statement
+     * @return
+     */
     @Override
     public String toString() {
         return "GOTO " + lineNumberExpression.toString();

@@ -19,7 +19,12 @@ public class DivNode extends AbstractBinaryOperatorTreeNode {
         super(leftOperand, rightOperand);
     }
 
-
+    /**
+     * Excute the division operation
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     protected Value compute(ExecutionContext executionContext, Value left, Value right) throws InterpreterException {
         if(left.getType() != VariableType.NUMBER || right.getType() != VariableType.NUMBER) {

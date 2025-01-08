@@ -14,6 +14,13 @@ public class SumNode extends AbstractBinaryOperatorTreeNode {
         super(leftOperand, rightOperand);
     }
 
+
+    /**
+     * Excute the addition operation
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     protected Value compute(ExecutionContext executionContext, Value left, Value right) throws InterpreterException {
 

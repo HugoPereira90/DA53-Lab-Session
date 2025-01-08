@@ -14,11 +14,20 @@ public class RemStatementNode extends AbstractStatementTreeNode {
         this.comment = comment;
     }
 
+    /**
+     * Run the REM statement
+     * @param executionContext
+     * @return
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) {
         return executionContext;
     }
 
+    /**
+     * Get the string representation of the REM statement
+     * @return
+     */
     @Override
     public String toString() {
         return "REM " + comment;

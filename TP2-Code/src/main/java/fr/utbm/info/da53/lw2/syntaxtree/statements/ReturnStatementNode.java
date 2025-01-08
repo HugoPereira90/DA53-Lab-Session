@@ -7,6 +7,12 @@ import fr.utbm.info.da53.lw2.syntaxtree.AbstractStatementTreeNode;
 
 public class ReturnStatementNode extends AbstractStatementTreeNode {
 
+    /**
+     * Run the RETURN statement
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         ExecutionContext parent = executionContext.getParent();
@@ -17,6 +23,10 @@ public class ReturnStatementNode extends AbstractStatementTreeNode {
         return parent;
     }
 
+    /**
+     * Get the string representation of the RETURN statement
+     * @return
+     */
     @Override
     public String toString() {
         return "RETURN"; //$NON-NLS-1$

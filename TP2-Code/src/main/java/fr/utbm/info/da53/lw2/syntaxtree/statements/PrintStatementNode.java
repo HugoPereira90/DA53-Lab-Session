@@ -20,6 +20,12 @@ public class PrintStatementNode extends AbstractStatementTreeNode {
         this.expression = expression;
     }
 
+    /**
+     * Run the PRINT statement
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the expression in the current execution context
@@ -29,6 +35,10 @@ public class PrintStatementNode extends AbstractStatementTreeNode {
         return executionContext;
     }
 
+    /**
+     * Get the string representation of the PRINT statement
+     * @return
+     */
     @Override
     public String toString() {
         return "PRINT " + expression.toString();

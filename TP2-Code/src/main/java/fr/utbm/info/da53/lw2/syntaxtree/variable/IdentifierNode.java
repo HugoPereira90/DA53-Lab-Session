@@ -28,6 +28,11 @@ public class IdentifierNode extends AbstractValueTreeNode {
         return executionContext.getSymbolTableEntry(identifier).getValue();
     }
 
+    /**
+     * Get the string representation of the identifier node.
+     *
+     * @return the string representation of the identifier node
+     */
     @Override
     public String toString() {
         return identifier;

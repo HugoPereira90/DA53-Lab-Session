@@ -28,6 +28,11 @@ public class NumberNode extends AbstractValueTreeNode {
         return new Value(value);
     }
 
+    /**
+     * Get the string representation of the number node.
+     *
+     * @return the string representation of the number node
+     */
     @Override
     public String toString() {
         return value;

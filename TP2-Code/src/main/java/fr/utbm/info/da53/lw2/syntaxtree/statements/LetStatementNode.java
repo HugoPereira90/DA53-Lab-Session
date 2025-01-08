@@ -19,6 +19,12 @@ public class LetStatementNode extends AbstractStatementTreeNode {
         this.expression = expression;
     }
 
+    /**
+     * Run the LET statement
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the expression
@@ -28,6 +34,10 @@ public class LetStatementNode extends AbstractStatementTreeNode {
         return executionContext;
     }
 
+    /**
+     * Get the string representation of the LET statement
+     * @return
+     */
     @Override
     public String toString() {
         return "LET " + variable + " = " + expression.toString();

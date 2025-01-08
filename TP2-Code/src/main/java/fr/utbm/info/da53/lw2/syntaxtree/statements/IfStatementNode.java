@@ -21,6 +21,12 @@ public class IfStatementNode extends AbstractStatementTreeNode {
         this.elseStatement = elseStatement;
     }
 
+    /**
+     * Run the IF statement
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the condition
@@ -36,6 +42,10 @@ public class IfStatementNode extends AbstractStatementTreeNode {
         return executionContext;
     }
 
+    /**
+     * Get the string representation of the IF statement
+     * @return
+     */
     @Override
     public String toString() {
         return "IF " + condition.toString() + " THEN " + thenStatement.toString() + (elseStatement != null ? " ELSE " + elseStatement.toString() : "");

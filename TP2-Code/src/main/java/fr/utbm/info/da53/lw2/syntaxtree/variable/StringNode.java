@@ -21,6 +21,12 @@ public class StringNode extends AbstractValueTreeNode {
         return value;
     }
 
+    /**
+     * Evaluate the string node.
+     *
+     * @param executionContext the execution context
+     * @return the value of the string
+     */
     @Override
     public Value evaluate(ExecutionContext executionContext) throws InterpreterException {
         return new Value(value);

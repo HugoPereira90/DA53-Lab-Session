@@ -16,6 +16,12 @@ public class GosubStatementNode extends AbstractStatementTreeNode {
         this.lineNumberExpression = lineNumberExpression;
     }
 
+    /**
+     * Run the GOSUB statement
+     * @param executionContext
+     * @return
+     * @throws InterpreterException
+     */
     @Override
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the line number to jump to
@@ -27,6 +33,10 @@ public class GosubStatementNode extends AbstractStatementTreeNode {
         return executionContext;
     }
 
+    /**
+     * Get the string representation of the GOSUB statement
+     * @return
+     */
     @Override
     public String toString() {
         return "GOSUB " + lineNumberExpression.toString();
