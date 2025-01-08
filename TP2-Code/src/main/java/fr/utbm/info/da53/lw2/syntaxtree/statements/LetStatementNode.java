@@ -35,6 +35,33 @@ public class LetStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the LET statement
+     * @param code
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+        if (this.variable == null) {
+            throw new IllegalStateException("LET statement has no variable to assign to.");
+        }
+        if (this.expression == null) {
+            throw new IllegalStateException("LET statement has no expression to assign.");
+        }
+
+        // Generate the code for the expression and get the resulting temporary variable
+        String expressionResult = this.expression.generate(code);
+
+        // Add an ASSIGN instruction to assign the expression's result to the variable
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.ASSIGN,
+                expressionResult, // Value to assign
+                null, // No second parameter
+                this.variable, // Target variable name
+                null, // No label
+                "Assign the value of the expression to the variable " + this.variable
+        ));
+    }
+
+    /**
      * Get the string representation of the LET statement
      * @return
      */

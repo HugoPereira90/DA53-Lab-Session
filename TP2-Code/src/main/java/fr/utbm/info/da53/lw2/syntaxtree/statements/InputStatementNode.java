@@ -77,6 +77,16 @@ public class InputStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the INPUT statement.
+     *
+     * @param code The three-address code.
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+
+    }
+
+    /**
      * Get the string representation of the INPUT statement.
      *
      * @return The string representation of the INPUT statement.

@@ -38,6 +38,43 @@ public class GosubStatementNode extends AbstractStatementTreeNode {
      * @return
      */
     @Override
+    public void generate(ThreeAddressCode code) {
+        if (this.expression == null) {
+            throw new IllegalStateException("GOSUB expression is missing.");
+        }
+
+        // Generate code for the expression and get the resulting variable
+        String targetLineNumber = this.expression.generate(code);
+
+        // Generate a label for the return address
+        String returnLabel = code.createLabel();
+
+        // Save the return address in the code
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.LABEL,
+                returnLabel, // Label for returning after the subroutine
+                null, // No second parameter
+                null, // No result
+                null, // No dynamic label needed here
+                "Return address for GOSUB"
+        ));
+
+        // Add the GOSUB instruction to jump to the target line
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.GOSUB,
+                targetLineNumber, // Tiny Basic line number of the subroutine
+                null, // No second parameter
+                null, // No result
+                null, // Label or mapping not resolved yet
+                "Dynamic jump to Tiny Basic line " + targetLineNumber + " for subroutine"
+        ));
+    }
+
+    /**
+     * Get the string representation of the GOSUB statement
+     * @return
+     */
+    @Override
     public String toString() {
         return "GOSUB " + lineNumberExpression.toString();
     }

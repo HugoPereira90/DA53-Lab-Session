@@ -34,5 +34,11 @@ public abstract class AbstractStatementTreeNode extends AbstractSyntaxTreeNode i
 	public AbstractStatementTreeNode() {
 		//
 	}
+
+	/**
+	 * Generate the three address code for the statement.
+	 * @param code the three address code to generate.
+	 */
+	public abstract String generate (ThreeAddressCode code);
 	
 }

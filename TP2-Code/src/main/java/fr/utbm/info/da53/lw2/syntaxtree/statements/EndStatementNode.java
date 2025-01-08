@@ -23,6 +23,23 @@ public class EndStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the END statement
+     * @param code
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+        // Add an EXIT instruction to the three-address code
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.END,
+                null, // No parameter
+                null, // No second parameter
+                null, // No result
+                null, // No label
+                "Terminate the program execution"
+        ));
+    }
+
+    /**
      * Get the string representation of the END statement
      * @return
      */

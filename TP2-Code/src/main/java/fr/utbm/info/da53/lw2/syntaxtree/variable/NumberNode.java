@@ -29,6 +29,27 @@ public class NumberNode extends AbstractValueTreeNode {
     }
 
     /**
+     * Generate the three-address code for the number node.
+     *
+     * @param code the three-address code where the generated code is stored
+     * @return the name of the temporary variable that holds the value of the number
+     */
+    @Override
+    public String generate(ThreeAddressCode code) {
+        if (this.number == null) {
+            throw new IllegalStateException("Identifier is missing or not set.");
+        }
+
+        // Check if the number exists in the symbol table
+        if (code.getSymbolTable().get(this.number.toString()) == null) {
+            throw new IllegalStateException("Undefined identifier: " + this.number);
+        }
+
+        // Return the number as it directly refers to the variable
+        return this.number.toString();
+    }
+
+    /**
      * Get the string representation of the number node.
      *
      * @return the string representation of the number node

@@ -34,6 +34,39 @@ public class MultNode extends AbstractBinaryOperatorTreeNode {
         return new Value(left.getValue(Number.class).floatValue() * right.getValue(Number.class).floatValue());
     }
 
+    /**
+     * Generate the three-address code for the Multiplication Operator
+     * @param code
+     */
+    @Override
+    public String generate(ThreeAddressCode code) {
+        // Generate code for the left operand and get the resulting temporary variable
+        String leftResult = getLeftOperand().generate(code);
+
+        // Generate code for the right operand and get the resulting temporary variable
+        String rightResult = getRightOperand().generate(code);
+
+        // Create a temporary variable for the result of the addition
+        String result = code.createTempVariable();
+
+        // Add an MULTIPLICATION instruction to the three-address code
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.MULTIPLICATION,
+                leftResult,   // Left operand
+                rightResult,  // Right operand
+                result,       // Result variable
+                null,         // No label
+                "Compute the multiplication of " + leftResult + " and " + rightResult
+        ));
+
+        // Return the result variable
+        return result;
+    }
+
+    /**
+     * Get the operator string
+     * @return
+     */
     @Override
     public String getOperatorString() {
         return "*";

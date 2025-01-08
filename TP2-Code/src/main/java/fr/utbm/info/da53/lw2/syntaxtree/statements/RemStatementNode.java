@@ -25,6 +25,38 @@ public class RemStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the RE% statement
+     * @param code
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+        if (this.comment == null) {
+            // If no comment, print an empty line
+            code.addRecord(new ThreeAddressRecord(
+                    ThreeAddressInstruction.PRINT,
+                    null, // No parameter
+                    null, // No second parameter
+                    null, // No result
+                    null, // No label
+                    "Rem an empty line"
+            ));
+        } else {
+            // Generate the code for the comment
+            String result = this.comment.generate(code);
+
+            // Add a PRINT instruction for the result
+            code.addRecord(new ThreeAddressRecord(
+                    ThreeAddressInstruction.PRINT,
+                    result, // The value to print
+                    null, // No second parameter
+                    null, // No result
+                    null, // No label
+                    "Rem the result of the comment"
+            ));
+        }
+    }
+    
+    /**
      * Get the string representation of the REM statement
      * @return
      */

@@ -36,6 +36,39 @@ public class PrintStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the PRINT statement
+     * @param code
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+        if (this.expression == null) {
+            // If no expression, print an empty line
+            code.addRecord(new ThreeAddressRecord(
+                    ThreeAddressInstruction.PRINT,
+                    null, // No parameter
+                    null, // No second parameter
+                    null, // No result
+                    null, // No label
+                    "Print an empty line"
+            ));
+        } else {
+            // Generate the code for the expression
+            String result = this.expression.generate(code);
+
+            // Add a PRINT instruction for the result
+            code.addRecord(new ThreeAddressRecord(
+                    ThreeAddressInstruction.PRINT,
+                    result, // The value to print
+                    null, // No second parameter
+                    null, // No result
+                    null, // No label
+                    "Print the result of the expression"
+            ));
+        }
+    }
+
+
+    /**
      * Get the string representation of the PRINT statement
      * @return
      */

@@ -29,6 +29,28 @@ public class IdentifierNode extends AbstractValueTreeNode {
     }
 
     /**
+     * Generate the three-address code for the identifier node.
+     *
+     * @param code the three-address code where the generated code is stored
+     * @return the name of the temporary variable that holds the value of the identifier
+     */
+    @Override
+    public String generate(ThreeAddressCode code) {
+        if (this.identifier == null || this.identifier.isEmpty()) {
+            throw new IllegalStateException("Identifier is missing or not set.");
+        }
+
+        // Check if the identifier exists in the symbol table
+        if (code.getSymbolTable().get(this.identifier) == null) {
+            throw new IllegalStateException("Undefined identifier: " + this.identifier);
+        }
+
+        // Return the identifier as it directly refers to the variable
+        return this.identifier;
+    }
+
+
+    /**
      * Get the string representation of the identifier node.
      *
      * @return the string representation of the identifier node

@@ -32,6 +32,30 @@ public class GotoStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the GOTO statement
+     * @param code
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+        if (this.expression == null) {
+            throw new IllegalStateException("GOTO expression is missing.");
+        }
+
+        // Generate code for the expression and get the resulting variable
+        String targetLineNumber = this.expression.generate(code);
+
+        // Add a GOTO instruction with the line number
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.GOTO,
+                targetLineNumber, // The Tiny Basic line number to jump to
+                null, // No second parameter
+                null, // No result
+                null, // Label or mapping not resolved yet
+                "Dynamic jump to Tiny Basic line " + targetLineNumber
+        ));
+    }
+
+    /**
      * Get the string representation of the GOTO statement
      * @return
      */

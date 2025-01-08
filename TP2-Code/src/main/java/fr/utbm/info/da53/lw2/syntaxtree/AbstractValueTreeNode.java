@@ -44,5 +44,11 @@ public abstract class AbstractValueTreeNode extends AbstractSyntaxTreeNode {
 	 * @throws InterpreterException when something bad occurs during the evaluation.
 	 */
 	public abstract Value evaluate(ExecutionContext executionContext) throws InterpreterException;
+
+	/**
+	 * Generate the three address code for the statement.
+	 * @param code the three address code to generate.
+	 */
+	public abstract String generate (ThreeAddressCode code);
 	
 }

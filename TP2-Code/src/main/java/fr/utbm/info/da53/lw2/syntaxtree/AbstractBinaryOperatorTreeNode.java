@@ -138,4 +138,10 @@ public abstract class AbstractBinaryOperatorTreeNode extends AbstractValueTreeNo
 				+")"; //$NON-NLS-1$
 	}
 
+	/**
+	 * Generate the three address code for the statement.
+	 * @param code the three address code to generate.
+	 */
+	public abstract String generate (ThreeAddressCode code);
+
 }

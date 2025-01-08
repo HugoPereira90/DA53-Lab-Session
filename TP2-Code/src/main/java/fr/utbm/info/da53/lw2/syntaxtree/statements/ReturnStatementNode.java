@@ -24,6 +24,23 @@ public class ReturnStatementNode extends AbstractStatementTreeNode {
     }
 
     /**
+     * Generate the three-address code for the RETURN statement
+     * @param code
+     */
+    @Override
+    public void generate(ThreeAddressCode code) {
+        // Add a RETURN instruction to the three-address code
+        code.addRecord(new ThreeAddressRecord(
+                ThreeAddressInstruction.RETURN,
+                null, // No parameter
+                null, // No second parameter
+                null, // No result
+                null, // No label
+                "Return to the caller of the subroutine"
+        ));
+    }
+
+    /**
      * Get the string representation of the RETURN statement
      * @return
      */
