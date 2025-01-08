@@ -1,21 +1,35 @@
 package token;
 
+/**
+ * Abstract class to represent a token.
+ */
 public abstract class Token implements Comparable<Token> {
     private String lexeme;
 
+    // Constructor
     public Token(String lexeme) {
         this.lexeme = lexeme;
     }
 
-    // Abstract method to get the token type
+    /**
+     * Get the token type.
+     *
+     * @return the token type
+     */
     public abstract String getTokenType();
 
-    // Getter for the lexeme
+    /**
+     * Get the lexeme.
+     *
+     * @return the lexeme
+     */
     public String getLexeme() {
         return lexeme;
     }
 
-    // Method to print the token information
+    /**
+     * Get the string representation of the token.
+     */
     @Override
     public String toString() {
         if(getTokenType().equals("")) {
@@ -24,7 +38,12 @@ public abstract class Token implements Comparable<Token> {
         return "<" + getTokenType() + "," + lexeme + ">";
     }
 
-    // To allow Tokens to be used in a TreeMap, we need to implement Comparable
+    /**
+     * Compare two tokens.
+     *
+     * @param other the other token
+     * @return the result of the comparison
+     */
     @Override
     public int compareTo(Token other) {
         return this.lexeme.compareTo(other.lexeme);

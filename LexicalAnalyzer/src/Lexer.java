@@ -2,6 +2,10 @@ import token.*;
 
 import java.io.IOException;
 
+
+/**
+ * Lexical analyzer for the BASIC programming language.
+ */
 public class Lexer {
     private Scanner scanner;
     private SymbolTable symbolTable;
@@ -13,6 +17,12 @@ public class Lexer {
         this.symbolTable = symbolTable;
     }
 
+    /**
+     * Get the next token from the input.
+     *
+     * @return the next token
+     * @throws IOException if an I/O error occurs
+     */
     public Token getNextSymbol() throws IOException {
         char currentChar;
 
