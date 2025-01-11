@@ -112,20 +112,34 @@ public class Lexer {
             return new Operator(Character.toString(scanner.get()));
         }
 
+        // Recognize comparison operators >=
         if (currentChar == '>' && scanner.peek() == '=') {
             scanner.get();  // Consume '>'
             scanner.get();  // Consume '='
             return new Reloop(">=");
         }
 
+        // Recognize comparison operators <=
         if (currentChar == '<' && scanner.peek() == '=') {
             scanner.get();  // Consume '<'
             scanner.get();  // Consume '='
             return new Reloop("<=");
         }
 
-        // Recognize comparison operators (e.g., <, >)
-        if ("<>".indexOf(currentChar) != -1) {
+        // Recognize comparison operators <>
+        if (currentChar == '<' && scanner.peek() == '>') {
+            scanner.get();  // Consume '<'
+            scanner.get();  // Consume '>'
+            return new Reloop("<>");
+        }
+
+        // Recognize comparison operators <
+        if (currentChar == '<') {
+            return new Reloop(Character.toString(scanner.get()));
+        }
+
+        // Recognize comparison operators >
+        if (currentChar == '>') {
             return new Reloop(Character.toString(scanner.get()));
         }
 
