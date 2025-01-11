@@ -9,6 +9,9 @@ import fr.utbm.info.da53.lw2.syntaxtree.AbstractStatementTreeNode;
  */
 public class EndStatementNode extends AbstractStatementTreeNode {
 
+    public EndStatementNode() {
+    }
+
     /**
      * Run the END statement
      * @param executionContext

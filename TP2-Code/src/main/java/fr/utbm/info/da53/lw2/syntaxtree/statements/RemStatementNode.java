@@ -14,6 +14,27 @@ public class RemStatementNode extends AbstractStatementTreeNode {
         this.comment = comment;
     }
 
+    public RemStatementNode() {
+        this.comment = null;
+    }
+
+    /**
+     * Get the comment of the REM statement
+     * @return
+     */
+    public String getComment() {
+        return comment;
+    }
+
+    /**
+     * Set the comment of the REM statement
+     * @param comment
+     */
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+
     /**
      * Run the REM statement
      * @param executionContext

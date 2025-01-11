@@ -19,6 +19,10 @@ public class DivNode extends AbstractBinaryOperatorTreeNode {
         super(leftOperand, rightOperand);
     }
 
+    public DivNode() {
+        super();
+    }
+
     /**
      * Excute the division operation
      * @param executionContext
@@ -38,7 +42,9 @@ public class DivNode extends AbstractBinaryOperatorTreeNode {
             fail(executionContext, InterpreterErrorType.DIVISION_BY_ZERO, "Division by zero");
         }
 
-        return new Value(NumberUtil.toNumber(l.doubleValue() / r.doubleValue()));
+        Number result = NumberUtil.toNumber(l.doubleValue() / r.doubleValue());
+
+        return new Value(result);
     }
 
     /**

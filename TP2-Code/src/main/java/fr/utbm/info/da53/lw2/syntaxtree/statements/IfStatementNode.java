@@ -21,6 +21,60 @@ public class IfStatementNode extends AbstractStatementTreeNode {
         this.elseStatement = elseStatement;
     }
 
+    public IfStatementNode() {
+        this.condition = null;
+        this.thenStatement = null;
+        this.elseStatement = null;
+    }
+
+    /**
+     * Get the condition of the IF statement
+     * @return
+     */
+    public AbstractValueTreeNode getCondition() {
+        return condition;
+    }
+
+     /**
+     * Get the "then" statement of the IF statement
+     * @return
+     */
+    public AbstractStatementTreeNode getThenStatement() {
+        return thenStatement;
+    }
+
+     /**
+     * Get the "else" statement of the IF statement
+     * @return
+     */
+    public AbstractStatementTreeNode getElseStatement() {
+        return elseStatement;
+    }
+
+     /**
+     * Set the condition of the IF statement
+     * @param condition
+     */
+    public void setCondition(AbstractValueTreeNode condition) {
+        this.condition = condition;
+    }
+
+     /**
+     * Set the "then" statement of the IF statement
+     * @param thenStatement
+     */
+    public void setThenStatement(AbstractStatementTreeNode thenStatement) {
+        this.thenStatement = thenStatement;
+    }
+
+     /**
+     * Set the "else" statement of the IF statement
+     * @param elseStatement
+     */
+    public void setElseStatement(AbstractStatementTreeNode elseStatement) {
+        this.elseStatement = elseStatement;
+    }
+
     /**
      * Run the IF statement
      * @param executionContext

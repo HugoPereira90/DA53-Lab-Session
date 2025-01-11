@@ -16,6 +16,26 @@ public class GotoStatementNode extends AbstractStatementTreeNode {
         this.lineNumberExpression = lineNumberExpression;
     }
 
+    public GotoStatementNode() {
+        this.lineNumberExpression = null;
+    }
+
+    /**
+     * Get the line number expression of the GOTO statement
+     * @return
+     */
+    public AbstractValueTreeNode getLineNumberExpression() {
+        return lineNumberExpression;
+    }
+
+    /**
+     * Set the line number expression of the GOTO statement
+     * @param lineNumberExpression
+     */
+    public void setLineNumberExpression(AbstractValueTreeNode lineNumberExpression) {
+        this.lineNumberExpression = lineNumberExpression;
+    }
+
     /**
      * Run the GOTO statement
      * @param executionContext
@@ -26,6 +46,11 @@ public class GotoStatementNode extends AbstractStatementTreeNode {
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the line number expression
         int lineNumber = lineNumberExpression.evaluate(executionContext).getValue(Integer.class);
+
+        if (lineNumber < 0) {
+            fail(executionContext, InterpreterErrorType.LINE_NOT_FOUND);
+        }
+
         // Jump to the specified line
         executionContext.setNextLine(lineNumber);
         return executionContext;

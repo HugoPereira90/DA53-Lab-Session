@@ -18,6 +18,10 @@ public class MultNode extends AbstractBinaryOperatorTreeNode {
         super(leftOperand, rightOperand);
     }
 
+    public MultNode() {
+        super();
+    }
+
 
     /**
      * Excute the multiplication operation
@@ -31,7 +35,12 @@ public class MultNode extends AbstractBinaryOperatorTreeNode {
             fail(executionContext, InterpreterErrorType.EXPECTING_NUMBER,getOperatorString() +" is only supported for numbers");
         }
 
-        return new Value(left.getValue(Number.class).floatValue() * right.getValue(Number.class).floatValue());
+        Number l = left.getValue(Number.class).doubleValue();
+        Number r = right.getValue(Number.class).doubleValue();
+
+        Number result = l.doubleValue() * r.doubleValue();
+
+        return new Value(result);
     }
 
     /**

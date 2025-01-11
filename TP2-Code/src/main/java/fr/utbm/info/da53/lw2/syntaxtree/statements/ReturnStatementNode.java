@@ -7,6 +7,9 @@ import fr.utbm.info.da53.lw2.syntaxtree.AbstractStatementTreeNode;
 
 public class ReturnStatementNode extends AbstractStatementTreeNode {
 
+    public ReturnStatementNode() {
+    }
+
     /**
      * Run the RETURN statement
      * @param executionContext

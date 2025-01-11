@@ -17,6 +17,28 @@ public class NumberNode extends AbstractValueTreeNode {
         this.value = value;
     }
 
+    public NumberNode() {
+        this.value = null;
+    }
+
+    /**
+     * Get the value of the number.
+     *
+     * @return the value of the number
+     */
+    public String getValue() {
+        return value;
+    }
+
+    /**
+     * Set the value of the number.
+     *
+     * @param value the value of the number
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     /**
      * Evaluate the number node.
      *

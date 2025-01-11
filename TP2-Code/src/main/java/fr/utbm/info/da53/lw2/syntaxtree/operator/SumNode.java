@@ -10,10 +10,15 @@ import fr.utbm.info.da53.lw2.type.Value;
 import fr.utbm.info.da53.lw2.type.VariableType;
 
 public class SumNode extends AbstractBinaryOperatorTreeNode {
+
+
     public SumNode(AbstractValueTreeNode leftOperand, AbstractValueTreeNode rightOperand) {
         super(leftOperand, rightOperand);
     }
 
+    public SumNode() {
+        super();
+    }
 
     /**
      * Excute the addition operation
@@ -32,7 +37,10 @@ public class SumNode extends AbstractBinaryOperatorTreeNode {
         // Perform the operation
         Number l = left.getValue(Number.class);
         Number r = right.getValue(Number.class);
-        return new Value(NumberUtil.toNumber(l.doubleValue() + r.doubleValue()));
+
+        Number result = l.doubleValue() + r.doubleValue();
+
+        return new Value(result);
     }
 
    /**

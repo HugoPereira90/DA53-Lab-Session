@@ -16,6 +16,26 @@ public class GosubStatementNode extends AbstractStatementTreeNode {
         this.lineNumberExpression = lineNumberExpression;
     }
 
+    public GosubStatementNode() {
+        this.lineNumberExpression = null;
+    }
+
+    /**
+     * Get the line number expression of the GOSUB statement
+     * @return
+     */
+    public AbstractValueTreeNode getLineNumberExpression() {
+        return lineNumberExpression;
+    }
+
+    /**
+     * Set the line number expression of the GOSUB statement
+     * @param lineNumberExpression
+     */
+    public void setLineNumberExpression(AbstractValueTreeNode lineNumberExpression) {
+        this.lineNumberExpression = lineNumberExpression;
+    }
+
     /**
      * Run the GOSUB statement
      * @param executionContext
@@ -26,15 +46,19 @@ public class GosubStatementNode extends AbstractStatementTreeNode {
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the line number to jump to
         int lineNumber = lineNumberExpression.evaluate(executionContext).getValue(Integer.class);
-        // Jump to the specified line number
 
+        if (lineNumber < 0) {
+            fail(executionContext, InterpreterErrorType.LINE_NOT_FOUND);
+        }
+
+        // Jump to the specified line number
         executionContext = new ExecutionContext(executionContext);
         executionContext.setNextLine(lineNumber);
         return executionContext;
     }
 
     /**
-     * Get the string representation of the GOSUB statement
+     * Generate the three-address code for the GOSUB statement
      * @return
      */
     @Override

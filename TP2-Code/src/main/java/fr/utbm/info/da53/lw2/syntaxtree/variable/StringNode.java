@@ -12,13 +12,34 @@ public class StringNode extends AbstractValueTreeNode {
         this.value = value;
     }
 
+    public StringNode() {
+        this.value = null;
+    }
+
     @Override
     public String toString() {
+        return "StringNode{" +
+                "value='" + value + '\'' +
+                '}';
+    }
+
+
+    /**
+     * Get the value of the string.
+     *
+     * @return the value of the string
+     */
+    public String getValue() {
         return value;
     }
 
-    public String getValue() {
-        return value;
+    /**
+     * Set the value of the string.
+     *
+     * @param value the value of the string
+     */
+    public void setValue(String value) {
+        this.value = value;
     }
 
     /**

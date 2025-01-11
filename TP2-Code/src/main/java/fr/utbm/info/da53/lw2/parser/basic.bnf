@@ -9,7 +9,6 @@ restOfCode ::= <CR> statement restOfCode
 statement ::=   <PRINT> expression
                 | <IF> expression relop expression <THEN> statement elsestatement
                 | <GOTO> expression
-                | <INPUT> variable
                 | <LET> variable <EQ> expression
                 | <GOSUB> expression
                 | <RETURN>

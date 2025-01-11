@@ -16,6 +16,10 @@ public class SubNode extends AbstractBinaryOperatorTreeNode {
         super(leftOperand, rightOperand);
     }
 
+    public SubNode() {
+        super();
+    }
+
     /**
      * Excute the subtraction operation
      * @param executionContext
@@ -33,7 +37,9 @@ public class SubNode extends AbstractBinaryOperatorTreeNode {
         // Perform the operation
         Number l = left.getValue(Number.class);
         Number r = right.getValue(Number.class);
-        return new Value(NumberUtil.toNumber(l.doubleValue() - r.doubleValue()));
+
+        Number result = l.doubleValue() - r.doubleValue();
+        return new Value(result);
     }
 
     /**

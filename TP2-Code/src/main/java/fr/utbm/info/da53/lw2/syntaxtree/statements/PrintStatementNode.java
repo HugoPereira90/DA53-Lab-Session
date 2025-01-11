@@ -20,6 +20,26 @@ public class PrintStatementNode extends AbstractStatementTreeNode {
         this.expression = expression;
     }
 
+    public PrintStatementNode() {
+        this.expression = null;
+    }
+
+    /**
+     * Get the expression to print
+     * @return
+     */
+    public AbstractValueTreeNode getExpression() {
+        return expression;
+    }
+
+    /**
+     * Set the expression to print
+     * @param expression
+     */
+    public void setExpression(AbstractValueTreeNode expression) {
+        this.expression = expression;
+    }
+
     /**
      * Run the PRINT statement
      * @param executionContext
@@ -30,6 +50,11 @@ public class PrintStatementNode extends AbstractStatementTreeNode {
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the expression in the current execution context
         Value value = expression.evaluate(executionContext);
+
+        if (value == null) {
+            fail(executionContext, InterpreterErrorType.UNSET_VALUE);
+        }
+
         // Print the evaluated value to the console
         System.out.println(value);
         return executionContext;

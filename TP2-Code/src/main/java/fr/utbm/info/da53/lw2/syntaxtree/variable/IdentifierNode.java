@@ -17,6 +17,28 @@ public class IdentifierNode extends AbstractValueTreeNode {
         this.identifier = identifier;
     }
 
+    public IdentifierNode() {
+        this.identifier = null;
+    }
+
+    /**
+     * Get the identifier of the variable.
+     *
+     * @return the identifier of the variable
+     */
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    /**
+     * Set the identifier of the variable.
+     *
+     * @param identifier the identifier of the variable
+     */
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
     /**
      * Evaluate the identifier node.
      *

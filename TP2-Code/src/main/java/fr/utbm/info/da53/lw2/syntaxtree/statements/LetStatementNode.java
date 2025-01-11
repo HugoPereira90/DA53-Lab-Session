@@ -19,6 +19,43 @@ public class LetStatementNode extends AbstractStatementTreeNode {
         this.expression = expression;
     }
 
+    public LetStatementNode(){
+        this.variable = null;
+        this.expression = null;
+    }
+
+    /**
+     * Get the variable of the LET statement
+     * @return
+     */
+    public String getVariable(){
+        return this.variable;
+    }
+
+    /**
+     * Get the expression of the LET statement
+     * @return
+     */
+    public AbstractValueTreeNode getExpression(){
+        return this.expression;
+    }
+
+    /**
+     * Set the variable of the LET statement
+     * @param variable
+     */
+    public void setVariable(String variable){
+        this.variable = variable;
+    }
+
+    /**
+     * Set the expression of the LET statement
+     * @param expression
+     */
+    public void setExpression(AbstractValueTreeNode expression){
+        this.expression = expression;
+    }
+
     /**
      * Run the LET statement
      * @param executionContext
@@ -29,6 +66,11 @@ public class LetStatementNode extends AbstractStatementTreeNode {
     public ExecutionContext run(ExecutionContext executionContext) throws InterpreterException {
         // Evaluate the expression
         Value value = expression.evaluate(executionContext);
+
+        if (value == null) {
+            fail(executionContext, InterpreterErrorType.UNSET_VALUE);
+        }
+
         // Store the value in the execution context
         executionContext.setVariable(variable, value);
         return executionContext;
